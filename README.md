@@ -1,3 +1,10 @@
 # ns-3 script
 runs multiple simulation concurrently and displays output results
-- a dir called pdrVScars must be created before running
+clone repo into ns-3 directory
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r req
+cd ns-3_script
+python3 ns-3_script 
+```
