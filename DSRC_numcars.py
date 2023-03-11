@@ -9,7 +9,6 @@ import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser(description="A script to run multiple ns3 simulations, extract data, and show graph")
 parser.add_argument("--process-only", action="store_true", help="pass this flag if you only wish to process the data")
-parser.add_argument("--setup", type=str, required=False, help="example: --setup sim_time,min_cars,max_cars,step")
 args = parser.parse_args()
 
 def run_sim(num_cars, queue, SIM_TIME):
@@ -22,11 +21,14 @@ if __name__ == "__main__":
         os.mkdir("pdrVScars")
 
     if args.process_only == False:
-        if args.setup is None or args.setup == '':
-            print("Please provide the --setup argument to run simulations...")
-            print("example: python3 DSRC_numcars.py --setup sim_time,min_cars,max_cars,step")
+
+        print("What settings do you wish to use?")
+        print("Please enter settings with the folowing format: sim_time min_cars max_cars step")
+        settings_input = input("Settings: ")
+        settings = settings_input.split(' ')
+        if len(settings) != 4:
+            print("Not enough arguments provided, exiting...")
             exit()
-        settings = args.setup.split(',')
         SIM_TIME = int(settings[0])
         MIN_CARS = int(settings[1])
         MAX_CARS = int(settings[2])
