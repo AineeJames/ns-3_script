@@ -7,7 +7,7 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 cd ns-3_script
-python3 DSRC_numcars.py --setup = 5,50,200,50 
+python3 DSRC_numcars.py --setup 5,50,200,50 
 ```
 
 in order to only view graphs run the following:
