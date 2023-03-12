@@ -8,32 +8,27 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser(description="A script to run multiple ns3 simulations, extract data, and show graph")
-parser.add_argument("--process-only", action="store_true", help="pass this flag if you only wish to process the data")
-parser.add_argument("--mode", choices=['cars', 'txpwr'], help="chooses what varible to change each time a test is ran")
+parser.add_argument("-P", "--process-only", action="store_true", help="pass this flag if you only wish to process the data")
+parser.add_argument("-M", "--mode", required=True, choices=['cars', 'txpwr'], help="chooses what varible to change each time a test is ran")
 args = parser.parse_args()
 
 def run_sim(step, queue, SIM_TIME):
     if args.mode == 'cars':
         os.system(f"../ns3 run 'vanet-routing-compare --totaltime={SIM_TIME} --nodes={step} --CSVfileName=ns-3_script/pdrVScars/{step}cars.csv --CSVfileName=ns-3_script/pdrVScars/{step}cars_summary.csv' > /dev/null 2>&1")
     elif args.mode == 'txpwr':
-        #TODO CHANGE THIS LINE os.system(f"../ns3 run 'vanet-routing-compare --totaltime={SIM_TIME} --nodes={step} --CSVfileName=ns-3_script/pdrVScars/{step}cars.csv --CSVfileName=ns-3_script/pdrVScars/{step}cars_summary.csv' > /dev/null 2>&1")
+        os.system(f"../ns3 run 'vanet-routing-compare --totaltime={SIM_TIME} --txp={step} --CSVfileName=ns-3_script/pdrVStxpwr/{step}txpwr.csv --CSVfileName=ns-3_script/pdrVStxpwr/{step}txpwr_summary.csv' > /dev/null 2>&1")
     queue.put(step)
 
 if __name__ == "__main__":
 
-    if not os.path.exists("pdrVScars"):
+    if args.mode == 'cars' and not os.path.exists("pdrVScars"):
         print("Creating pdrVScars directory...")
         os.mkdir("pdrVScars")
+    elif args.mode == 'txpwr' and not os.path.exists("pdrVStxpwr"):
+        print("Creating pdrVStxpwr directory...")
+        os.mkdir("pdrVStxpwr")
 
     if args.process_only == False:
-
-        if args.mode == None or args.mode == '':
-            print("Please set a mode when running the script...")
-            exit()
-        elif args.mode == 'cars':
-            print("Changing the number of cars.")
-        elif args.mode == 'txpwr':
-            print("Changing the tx power.")
 
         print("What settings do you wish to use?")
         if args.mode == 'cars':
@@ -68,7 +63,7 @@ if __name__ == "__main__":
             
         # clean up old csv's
         print("Cleaning old csv's...")
-        dir_path = "./pdrVScars"
+        dir_path = "./pdrVScars" if args.mode == 'cars' else "./pdrVStxpwr"
         for file_name in os.listdir(dir_path):
             file_path = os.path.join(dir_path, file_name)
             if os.path.isfile(file_path):
@@ -97,7 +92,7 @@ if __name__ == "__main__":
             processes.append(process)
 
         # Update progress bar
-        for i in tqdm(range(len(cars)), ascii=False):
+        for i in tqdm(range(len(cars if args.mode == 'cars' else tx)), ascii=False):
             process_num = queue.get()
             tqdm.write(f"Thread w/ {process_num} {'cars' if args.mode == 'cars' else 'txpwr'} just finished...")
 
