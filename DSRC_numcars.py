@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser(description="A script to run multiple ns3 simulations, extract data, and show graph")
 parser.add_argument("--process-only", action="store_true", help="pass this flag if you only wish to process the data")
+parser.add_argument("--mode", choices=['cars', 'txpwr'], help="chooses what varible to change each time a test is ran")
 args = parser.parse_args()
 
 def run_sim(num_cars, queue, SIM_TIME):
@@ -21,6 +22,14 @@ if __name__ == "__main__":
         os.mkdir("pdrVScars")
 
     if args.process_only == False:
+
+        if args.mode == None or args.mode == '':
+            print("Please set a mode when running the script...")
+            exit()
+        elif args.mode == 'cars':
+            print("Changing the number of cars.")
+        elif args.mode == 'txpwr':
+            print("Changing the tx power.")
 
         print("What settings do you wish to use?")
         print("Please enter settings with the folowing format: sim_time min_cars max_cars step")
