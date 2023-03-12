@@ -105,13 +105,13 @@ if __name__ == "__main__":
     sns.set_style("whitegrid")
     plt.figure(figsize=(10,6))
     loc_list = ["SimulationSecond", "BSM_PDR4"]
-    dir_path = "./pdrVScars"
 
-    dir_path = "./pdrVScars"
+    mode = "cars" if args.mode == 'cars' else "txpwr"
+    dir_path = f"./pdrVS{mode}"
     file_paths = []
     for file_name in os.listdir(dir_path):
         file_paths.append(os.path.join(dir_path, file_name))
-    sorted_file_paths = sorted(file_paths, key=lambda x: int(x.split('/')[-1].split('cars')[0]))
+    sorted_file_paths = sorted(file_paths, key=lambda x: int(x.split('/')[-1].split(mode)[0]))
 
     for file_path in sorted_file_paths:
         if os.path.isfile(file_path):
@@ -119,8 +119,8 @@ if __name__ == "__main__":
             df = pd.read_csv(file_path)
             selected_columns = df.loc[:, loc_list]
             print(selected_columns)
-            label = file_path.split('/')[2].split('c')[0]
-            sns.lineplot(data=selected_columns.iloc[:, 1], label=f'{label} Cars')
+            label = file_path.split('/')[2].split(mode[0])[0]
+            sns.lineplot(data=selected_columns.iloc[:, 1], label=f'{label} {mode}')
 
     plt.title('BSM PDR for 10 Simulations')
     plt.xlabel('Simulation Time')
