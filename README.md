@@ -16,5 +16,14 @@ python DSRC_script.py --help   # verify install
 ```
 ## Usage
 ### Changing the number of cars
+```bash
+python DSRC_script.py -M cars
+```
 ### Changing the tx power
+```bash
+python DSRC_script.py -M txpwr
+```
 ### Graph previous data
+```bash
+python DSRC_script.py -M {cars,txpwr} -P
+```
