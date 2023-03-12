@@ -1,4 +1,5 @@
 # ns-3 script
+<img src="./imgs/tx_examples.png">
 ## Description
 This script runs the vanet-routing-compare example in ns-3 multiple times. Each time, a script parameter is able to be changed.
 ### Supported parameters
