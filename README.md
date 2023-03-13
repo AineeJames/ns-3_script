@@ -2,9 +2,15 @@
 ![TXPWR_EXAMPLE](./imgs/tx_example.png)
 ## Description
 This script runs the vanet-routing-compare example in ns-3 multiple times. Each time, a script parameter is able to be changed.
+
+<hr>
+
 ### Supported parameters
 - tx power
 - number of cars
+
+<hr>
+
 ## Installation
 ```bash
 cd <ns-3 path>
@@ -15,6 +21,9 @@ source venv/bin/activate
 pip install -r "requirements.txt"
 python DSRC_script.py --help   # verify install
 ```
+
+<hr>
+
 ## Usage
 <details>
 <summary>Changing the number of cars</summary>
