@@ -16,6 +16,13 @@ pip install -r "requirements.txt"
 python DSRC_script.py --help   # verify install
 ```
 ## Usage
+<details>
+<summary>Changing the number of cars</summary>
+```bash
+python DSRC_script.py -M cars
+```
+<br>
+</details>
 ### Changing the number of cars
 ```bash
 python DSRC_script.py -M cars
