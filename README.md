@@ -26,15 +26,22 @@ python DSRC_script.py -M cars
 
 </details>
 
-### Changing the number of cars
-```bash
-python DSRC_script.py -M cars
-```
-### Changing the tx power
+<details>
+<summary>Changing the tx power</summary>
+<hr>
+
 ```bash
 python DSRC_script.py -M txpwr
 ```
-### Graph previous data
+
+</details>
+
+<details>
+<summary>Graphing previous data</summary>
+<hr>
+
 ```bash
 python DSRC_script.py -M {cars,txpwr} -P
 ```
+
+</details>
